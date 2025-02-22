@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Scope;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.Retry;
+import org.springframework.cloud.client.circuitbreaker.Bulkhead;
 
 @RestController
 public class TrafficController {
@@ -27,6 +30,9 @@ public class TrafficController {
     private final Tracer tracer;
 
     @GetMapping("/route")
+    @CircuitBreaker(name = "routeTraffic")
+    @Retry(name = "routeTraffic")
+    @Bulkhead(name = "routeTraffic")
     public String routeTraffic(@RequestParam String trafficType) {
         Span rootSpan = tracer.spanBuilder("route-traffic")
             .setAttribute("traffic.type", trafficType)

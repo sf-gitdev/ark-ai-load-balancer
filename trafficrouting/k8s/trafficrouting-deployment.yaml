@@ -28,4 +28,28 @@ spec:
             path: /actuator/health
             port: 8082
           initialDelaySeconds: 30
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+      networkPolicies:
+      - podSelector:
+          matchLabels:
+            app: trafficrouting
+        policyTypes:
+        - Ingress
+        - Egress
+      podDisruptionBudget:
+        maxUnavailable: 1
+      serviceMeshIntegration:
+        enabled: true
+      healthChecks:
+        - name: trafficrouting-health
+          path: /actuator/health
+          port: 8082
+          initialDelaySeconds: 30
           periodSeconds: 10 
