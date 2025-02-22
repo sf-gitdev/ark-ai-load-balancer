@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  servicediscovery:
+    build:
+      context: ./servicediscovery
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+
+  apigateway:
+    build:
+      context: ./apigateway
+    ports:
+      - "8080:8080"
+    networks:
+      - microservices-network
+    depends_on:
+      - servicediscovery
+
+  ratelimiter:
+    build:
+      context: ./ratelimiter
+    ports:
+      - "8081:8081"
+    networks:
+      - microservices-network
+    depends_on:
+      - servicediscovery
+
+  mlservice:
+    build:
+      context: ./mlservice
+    ports:
+      - "8085:8085"
+    networks:
+      - microservices-network
+    depends_on:
+      - servicediscovery
+
+  trafficrouting:
+    build:
+      context: ./trafficrouting
+    ports:
+      - "8082:8082"
+    networks:
+      - microservices-network
+    depends_on:
+      - servicediscovery
+
+networks:
+  microservices-network:
+    driver: bridge 
