@@ -8,6 +8,19 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8761/eureka/
   instance:
     hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: traffic-routing
+          uri: lb://trafficrouting
+          predicates:
+            - Path=/route/**
+        - id: ml-service
+          uri: lb://mlservice
+          predicates:
+            - Path=/ml/**

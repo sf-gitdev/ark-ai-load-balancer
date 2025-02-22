@@ -30,7 +30,7 @@ public class TrafficController {
     private final Tracer tracer;
 
     @GetMapping("/route")
-    @CircuitBreaker(name = "routeTraffic")
+    @CircuitBreaker(name = "routeTraffic", fallbackMethod = "fallbackRouteTraffic")
     @Retry(name = "routeTraffic")
     @Bulkhead(name = "routeTraffic")
     public String routeTraffic(@RequestParam String trafficType) {
@@ -51,5 +51,9 @@ public class TrafficController {
         } finally {
             rootSpan.end();
         }
+    }
+
+    public String fallbackRouteTraffic(String trafficType, Throwable t) {
+        return "Fallback response due to: " + t.getMessage();
     }
 } 

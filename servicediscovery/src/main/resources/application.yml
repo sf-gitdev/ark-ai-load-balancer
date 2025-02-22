@@ -11,7 +11,7 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: eureka1
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 10
     lease-expiration-duration-in-seconds: 30
@@ -19,7 +19,7 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8761/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 0
     enable-self-preservation: false

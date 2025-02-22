@@ -27,8 +27,8 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/actuator/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/eureka/**").authenticated()
+                .anyRequest().permitAll()
             .and()
             .httpBasic();
         return http.build();

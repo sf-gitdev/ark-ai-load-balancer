@@ -8,6 +8,8 @@ services:
       - "8761:8761"
     networks:
       - microservices-network
+    deploy:
+      replicas: 2  # Scale Eureka instances
 
   apigateway:
     build:

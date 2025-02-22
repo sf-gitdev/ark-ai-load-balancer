@@ -5,4 +5,8 @@ scrape_configs:
   - job_name: 'trafficrouting'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['trafficrouting:8082'] 
+      - targets: ['trafficrouting:8082']
+  - job_name: 'eureka'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['eureka1:8761', 'eureka2:8761'] 
